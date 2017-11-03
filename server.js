@@ -16,6 +16,8 @@ app.get('/',function(req,res){
 
 io.on('connection', function(socket) {
     socket.emit('welcome', 'Hello there!')
+
+    socket.on('msg', (data) => { console.log(data) })
 })
 
 server.listen(app.get("port"), () => {

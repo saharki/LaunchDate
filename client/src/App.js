@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import socketIOClient from "socket.io-client";
 import './App.css';
+import { connect } from 'react-redux';
+import { newMsg } from './actions';
 
-import CircularProgress from 'material-ui/CircularProgress';
 import Paper from 'material-ui/Paper';
 import AppBar from 'material-ui/AppBar';
 import List from 'material-ui/List/List';
@@ -27,30 +28,34 @@ class App extends Component {
       response: false,
       endpoint: "http://localhost:3001"
     };
+    this.sendMsg = this.sendMsg.bind(this);
   }
   componentDidMount() {
     const { endpoint } = this.state;
     const socket = socketIOClient(endpoint);
-    socket.on("welcome", data => this.setState({ msg: data }));
+    socket.on("welcome",(data) => {
+        this.props.dispatch(newMsg(data))
+        console.log(data)
+    });
+  }
+  sendMsg() {
+
   }
   render() {
-    const { msg } = this.state;
+    let messages = this.props.messages ? this.props.messages : null;
+
     return (
       <div className="main" style={{ textAlign: "center", fontFamily: "Roboto", backgroundColor: "#3949AB" }}>
         <Paper style={style} zDepth={4} >
-            <AppBar  showMenuIconButton={false} title="React Chat"/>
+            <AppBar style={{ textAlign: "center" }} showMenuIconButton={false} title="React Chat"/>
             <List>
-                <Subheader inset={true}>Messages:</Subheader>
-                <ListItem >New Message: {msg}</ListItem>
+                <Subheader>Messages:</Subheader>
+                <ListItem insetChildren={true} >New Message: {messages && messages[0]}</ListItem>
                 <Divider />
-                <ListItem  primaryText="Peter Carlsson" />
+                <ListItem insetChildren={true} >New Message: {messages && messages[0]}</ListItem>
             </List>
             <TextField style={{ position: "absolute", bottom: 0, margin: '10px'}}
-            hintText="Chat away!"
             floatingLabelText="Your message:"
-            multiLine={true}
-            rows={2}
-            fullWidth={true}
             />
         </Paper>
       </div>
@@ -58,4 +63,10 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapStateToProps = function(state){
+    return {
+        messages: state.messages
+    };
+};
+
+export default connect(mapStateToProps)(App);
