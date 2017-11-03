@@ -32,17 +32,31 @@ class App extends Component {
   }
   componentDidMount() {
     const { endpoint } = this.state;
-    const socket = socketIOClient(endpoint);
-    socket.on("welcome",(data) => {
+    this.socket = socketIOClient(endpoint);
+    this.socket.on("welcome",(data) => {
         this.props.dispatch(newMsg(data))
         console.log(data)
     });
   }
-  sendMsg() {
-
+  sendMsg(msg) {
+      console.log(msg)
+      this.socket.emit('msg', msg);
   }
   render() {
-    let messages = this.props.messages ? this.props.messages : null;
+    const { messages } = this.props;
+    let listItems = null;
+
+    if (messages) {
+        console.log(messages)
+        listItems = messages.map((msg, index) => {
+        return <div key={index}>
+            <ListItem insetChildren={true} >
+                <p>New Message: {msg}</p>
+            </ListItem>
+            <Divider />
+        </div>
+        });
+    }
 
     return (
       <div className="main" style={{ textAlign: "center", fontFamily: "Roboto", backgroundColor: "#3949AB" }}>
@@ -50,12 +64,19 @@ class App extends Component {
             <AppBar style={{ textAlign: "center" }} showMenuIconButton={false} title="React Chat"/>
             <List>
                 <Subheader>Messages:</Subheader>
-                <ListItem insetChildren={true} >New Message: {messages && messages[0]}</ListItem>
-                <Divider />
-                <ListItem insetChildren={true} >New Message: {messages && messages[0]}</ListItem>
+                {listItems}
             </List>
+
             <TextField style={{ position: "absolute", bottom: 0, margin: '10px'}}
             floatingLabelText="Your message:"
+
+            onKeyPress={(e) => {
+                if (e.key === 'Enter' && e.target.value.length > 0) {
+                    this.sendMsg(e.target.value);
+                    e.target.value = '';
+                }
+            }}
+
             />
         </Paper>
       </div>

@@ -17,7 +17,10 @@ app.get('/',function(req,res){
 io.on('connection', function(socket) {
     socket.emit('welcome', 'Hello there!')
 
-    socket.on('msg', (data) => { console.log(data) })
+    socket.on('msg', (data) => {
+        console.log(data)
+        io.emit('welcome', data)
+    })
 })
 
 server.listen(app.get("port"), () => {
