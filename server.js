@@ -11,7 +11,7 @@ if (process.env.NODE_ENV === "production") {
 }
 
 app.get('/',function(req,res){
-    res.send('hello world');
+    res.redirect('http://localhost:3000/');
 });
 
 io.on('connection', function(socket) {
