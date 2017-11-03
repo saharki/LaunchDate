@@ -1,0 +1,24 @@
+{
+  "name": "react-chat",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "node server.js",
+    "client": "node start-client.js",
+    "dev": "echo \"This command has been deprecated. Use 'npm start'\" && exit 1",
+    "lint": "eslint ."
+  },
+  "author": "dshire",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.2",
+    "material-ui": "^0.19.4",
+    "socket.io": "^2.0.4"
+  },
+  "devDependencies": {
+    "concurrently": "^3.5.0"
+  }
+}
