@@ -15,11 +15,14 @@ app.get('/',function(req,res){
 });
 
 io.on('connection', function(socket) {
-    socket.emit('welcome', 'Hello there!')
+    console.log(`socket with the id ${socket.id} is now connected`);
+    socket.on('disconnect', function(){
+        console.log(`socket with the id ${socket.id} is now disconnected`);
+    });
 
     socket.on('msg', (data) => {
         console.log(data)
-        io.emit('welcome', data)
+        io.emit('msg', data)
     })
 })
 

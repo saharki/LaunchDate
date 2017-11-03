@@ -13,7 +13,7 @@ import TextField from 'material-ui/TextField';
 import Divider from 'material-ui/Divider';
 
 const style = {
-  height: '80%',
+  height: '500px',
   width: '60%',
   margin: 50,
   textAlign: 'left',
@@ -33,13 +33,16 @@ class App extends Component {
   componentDidMount() {
     const { endpoint } = this.state;
     this.socket = socketIOClient(endpoint);
-    this.socket.on("welcome",(data) => {
+    this.socket.on("msg",(data) => {
         this.props.dispatch(newMsg(data))
-        console.log(data)
     });
   }
+  componentDidUpdate(){
+      if (this.chatWindow) {
+          this.chatWindow.scrollTop = this.chatWindow.scrollHeight;
+      }
+  }
   sendMsg(msg) {
-      console.log(msg)
       this.socket.emit('msg', msg);
   }
   render() {
@@ -47,11 +50,10 @@ class App extends Component {
     let listItems = null;
 
     if (messages) {
-        console.log(messages)
         listItems = messages.map((msg, index) => {
         return <div key={index}>
-            <ListItem insetChildren={true} >
-                <p>New Message: {msg}</p>
+            <ListItem >
+                <p>{msg}</p>
             </ListItem>
             <Divider />
         </div>
@@ -62,11 +64,12 @@ class App extends Component {
       <div className="main" style={{ textAlign: "center", fontFamily: "Roboto", backgroundColor: "#3949AB" }}>
         <Paper style={style} zDepth={4} >
             <AppBar style={{ textAlign: "center" }} showMenuIconButton={false} title="React Chat"/>
-            <List>
-                <Subheader>Messages:</Subheader>
-                {listItems}
-            </List>
-
+            <div className ="chat" ref={elem => this.chatWindow = elem}>
+                <List style={{height: "350px"}}>
+                    <Subheader>Messages:</Subheader>
+                    {listItems}
+                </List>
+            </div>
             <TextField style={{ position: "absolute", bottom: 0, margin: '10px'}}
             floatingLabelText="Your message:"
 
@@ -76,7 +79,6 @@ class App extends Component {
                     e.target.value = '';
                 }
             }}
-
             />
         </Paper>
       </div>

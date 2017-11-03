@@ -10,8 +10,12 @@
 
 .container {
     width: 40%;
-    height: 80%;
+    height: 500px;
     margin: 40px auto;
     background-color: white;
     text-align: left;
+}
+
+.chat {
+    overflow: auto;
 }
