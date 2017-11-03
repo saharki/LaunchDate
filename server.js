@@ -21,10 +21,10 @@ io.on('connection', function(socket) {
     });
 
     socket.on('msg', (data) => {
-        console.log(data)
-        io.emit('msg', data)
-    })
-})
+        console.log(data);
+        io.emit('msg', data);
+    });
+});
 
 server.listen(app.get("port"), () => {
     console.log(`Find the server at: http://localhost:${app.get("port")}/`); // eslint-disable-line no-console

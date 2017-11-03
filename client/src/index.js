@@ -16,7 +16,9 @@ export const store = createStore(reducer, composeWithDevTools(applyMiddleware(re
 const Main = () => (
     <Provider store={store}>
         <MuiThemeProvider>
-            <App />
+             <div className="main" >
+                 <App />
+             </div>
         </MuiThemeProvider>
     </Provider>
 );

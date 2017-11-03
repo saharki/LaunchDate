@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import socketIOClient from "socket.io-client";
-import './App.css';
 import { connect } from 'react-redux';
 import { newMsg } from './actions';
 
@@ -12,7 +11,7 @@ import Subheader from 'material-ui/Subheader';
 import TextField from 'material-ui/TextField';
 import Divider from 'material-ui/Divider';
 
-const style = {
+const containerStyle = {
   height: '500px',
   width: '60%',
   margin: 50,
@@ -61,10 +60,9 @@ class App extends Component {
     }
 
     return (
-      <div className="main" style={{ textAlign: "center", fontFamily: "Roboto", backgroundColor: "#3949AB" }}>
-        <Paper style={style} zDepth={4} >
+        <Paper style={containerStyle} zDepth={4} >
             <AppBar style={{ textAlign: "center" }} showMenuIconButton={false} title="React Chat"/>
-            <div className ="chat" ref={elem => this.chatWindow = elem}>
+            <div style={{overflow: "auto"}} ref={elem => this.chatWindow = elem}>
                 <List style={{height: "350px"}}>
                     <Subheader>Messages:</Subheader>
                     {listItems}
@@ -81,7 +79,6 @@ class App extends Component {
             }}
             />
         </Paper>
-      </div>
     );
   }
 }
