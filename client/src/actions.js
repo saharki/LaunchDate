@@ -4,3 +4,10 @@ export function newMsg(data) {
         msg: data
     };
 }
+
+export function enterName(name) {
+    return {
+        type: 'ENTER_NAME',
+        name
+    };
+}
