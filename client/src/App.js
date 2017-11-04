@@ -30,7 +30,6 @@ class App extends Component {
         endpoint: "http://localhost:3001"
     };
     this.sendMsg = this.sendMsg.bind(this);
-    this.handleClose = this.handleClose.bind(this);
     this.saveName = this.saveName.bind(this);
   }
   componentDidMount() {
@@ -48,9 +47,6 @@ class App extends Component {
   sendMsg(msg) {
       this.socket.emit('msg', { text: msg, name: this.props.name });
   }
-  handleClose() {
-      this.setState({open: false});
-  };
   saveName(name) {
       this.setState({open: false});
       this.props.dispatch(enterName(name));
