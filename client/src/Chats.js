@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import { chooseGroup } from './actions'
 import ChatDialog from './ChatDialog'
-// import ChatsList from './ChatsList'
+import ChatsList from './ChatsList'
 
 class Chats extends Component {
 
@@ -12,16 +12,13 @@ class Chats extends Component {
   }
 
   render() {
-    // const {chosenGroupId} = this.state
-    return (
-      // {
-        // chosenGroupId ? 
-        // <ChatsList/> :
-        <ChatDialog 
-          groupId='vitrina'
-        />
-      // }
-    );
+    const { chosenGroupId } = this.props
+
+    if(chosenGroupId)  {
+      return <ChatDialog />
+    }
+    
+    return (<ChatsList/>)
   }
 }
 

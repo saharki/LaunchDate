@@ -4,7 +4,9 @@ export function reducer(state = {
             messages: [],
         }
     },
-    user: null,
+    user: {
+        name: 'צרות בהייטק'
+    },
 
 }, action) {
 

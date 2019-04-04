@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 
 import Chats from './Chats'
@@ -14,7 +14,7 @@ const containerStyle = {
 };
 
 const App = () => {
-  const [chosenRestaraunt, setChosenRestaraunt] = useState(null);
+  const [chosenRestaraunt, setChosenRestaraunt] = useState(true);
 
   return <div style={containerStyle}>
     {
@@ -28,7 +28,7 @@ const App = () => {
   </div>
 }
 
-const mapStateToProps = function ({chosenRestaraunt}) {
+const mapStateToProps = function () {
   return {};
 };
 
