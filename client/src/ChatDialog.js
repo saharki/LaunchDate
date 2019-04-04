@@ -24,12 +24,14 @@ const MESSAGE_HEADER_STYLE = {
 }
 
 const containerStyle = {
-  height: '85vh',
-  width: '25em',
+  // height: '85vh',
+  // width: '25em',
   margin: 50,
   textAlign: 'left',
   display: 'inline-block',
   position: 'relative'
+  height: '100%',
+  width: '100%'
 };
 
 class Chat extends Component {
@@ -56,9 +58,9 @@ class Chat extends Component {
     }
   }
   sendMsg(msg) {
-    const { user } = this.props
+    const { user, groupId } = this.props
     if(user) {
-      this.socket.emit('msg', { text: msg, name: user.name });
+      this.socket.emit('msg', { message: {text: msg, name: user.name}, groupId });
     }
   }
   saveName(name) {
@@ -66,7 +68,7 @@ class Chat extends Component {
     this.props.dispatch(enterName(name));
   }
   render() {
-    const { messages } = this.props;
+    const { messages, groupId } = this.props;
     let listItems = null;
 
     if (messages) {
@@ -82,10 +84,18 @@ class Chat extends Component {
 
     return (
       <Paper style={containerStyle} zDepth={4} >
+<<<<<<< HEAD:client/src/Chat.js
         <AppBar style={{ textAlign: "center" }} showMenuIconButton={false} title="React Chat" />
         <div style={{ overflow: "auto", height: "80%" }} ref={elem => this.chatWindow = elem}>
           <List style={{ height: "100%" }}>
             <Subheader style={MESSAGE_HEADER_STYLE}>Messages:</Subheader>
+=======
+        <AppBar style={{ textAlign: "center" }} showMenuIconButton={false} title={groupId} />
+        
+        <div style={{ overflow: "auto" }} ref={elem => this.chatWindow = elem}>
+          <List style={{ height: "350px" }}>
+            <Subheader>Messages:</Subheader>
+>>>>>>> 113e066a668a41f67a127610ae396fe5ebb97b07:client/src/ChatDialog.js
             {listItems}
           </List>
         </div>
@@ -119,9 +129,9 @@ class Chat extends Component {
   }
 }
 
-const mapStateToProps = function (state) {
+const mapStateToProps = function (state, props) {
   return {
-    messages: state.messages,
+    messages: props.groupId && state.groups[props.groupId].messages,
     user: state.user
   };
 };
