@@ -1,12 +1,23 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import Chat from './Chat'
+import Chats from './Chats'
+
+const containerStyle = {
+  height: '812px',
+  width: '375px',
+  margin: 50,
+  textAlign: 'left',
+  display: 'inline-block',
+  position: 'relative'
+};
 
 class App extends Component {
   render() {
     return (
-      <Chat/>
+      <div style={containerStyle}>
+        <Chats/>
+      </div>
     );
   }
 }
