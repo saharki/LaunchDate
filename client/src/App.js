@@ -1,7 +1,8 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import { connect } from 'react-redux';
 
 import Chats from './Chats'
+import MatchFinder from './MatchFinder'
 
 const containerStyle = {
   height: '812px',
@@ -12,17 +13,22 @@ const containerStyle = {
   position: 'relative'
 };
 
-class App extends Component {
-  render() {
-    return (
-      <div style={containerStyle}>
-        <Chats/>
-      </div>
-    );
-  }
+const App = () => {
+  const [chosenRestaraunt, setChosenRestaraunt] = useState(null);
+
+  return <div style={containerStyle}>
+    {
+      chosenRestaraunt ?
+        <Chats /> :
+        <MatchFinder setChosenRestaraunt={(restaraunt) => {
+          setChosenRestaraunt(restaraunt);
+        }}
+        />
+    }
+  </div>
 }
 
-const mapStateToProps = function (state) {
+const mapStateToProps = function ({chosenRestaraunt}) {
   return {};
 };
 
