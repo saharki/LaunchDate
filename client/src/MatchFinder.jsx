@@ -8,6 +8,7 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: space-between;
     padding: 10%;
 `;
 
@@ -19,8 +20,8 @@ const RestarauntOptionContainer = styled.div`
 `;
 
 const Actions = styled.div`
-    width: 100px;
-    justify-content: space-between;
+    width: 100%;
+    justify-content: space-evenly;
     display: flex;
     flex-direction: row;
 `;

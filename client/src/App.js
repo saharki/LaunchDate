@@ -1,10 +1,14 @@
-import React, { Component, useState } from 'react';
-import { connect } from 'react-redux';
+import React, { useState, useEffect } from 'react';
 import Chat from './Chat'
 import MatchFinder from './MatchFinder'
 
-const App = () => {
+const App = (props) => {
   const [chosenRestaraunt, setChosenRestaraunt] = useState(null);
+
+  useEffect(() => {
+    const action = chooseGroup(chosenRestaraunt.groups[0]._id);
+    props.dispatch(action);
+  }, []);
 
   return <div>
     {
