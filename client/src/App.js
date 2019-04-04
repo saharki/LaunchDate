@@ -30,7 +30,7 @@ const App = (props) => {
   const { classes } = props;
 
   useEffect(() => {
-    axios.get('https://515fdb63.ngrok.io/restaurants')
+    axios.get('https://f2fd39cd.ngrok.io/restaurants')
       .then((result) => {
         setCurrentRestaraunts(result.data);
         setStatus('match');
