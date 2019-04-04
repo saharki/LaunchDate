@@ -1,12 +1,28 @@
 export function reducer(state = {
-    messages: [],
+    groups: {
+        'vitrina': {
+            messages: [],
+        }
+    },
     user: null,
+
 }, action) {
 
     if (action.type === 'NEW_MSG') {
+        const groupState = state.groups[action.groupId] ? {...state.groups[action.groupId]} : {}
         state = Object.assign({}, state, {
-            messages: state.messages ? [...state.messages, action.msg] : [action.msg]
+            groups: {
+                ...action.groups,
+                [action.groupId]: {
+                    ...groupState,
+                    messages: state.groups[action.groupId] ? [...state.groups[action.groupId].messages, action.msg] : [action.msg]
+                }
+            }
         });
+    }
+
+    if (action.type === 'CHOOSE_GROUP') {
+        state = { ...state, chosenGroupId: action.groupId }
     }
 
     if (action.type === 'ENTER_NAME') {

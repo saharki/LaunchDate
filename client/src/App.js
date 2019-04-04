@@ -1,19 +1,32 @@
 import React, { useState, useEffect } from 'react';
-import Chat from './Chat'
-import MatchFinder from './MatchFinder'
+import Chats from './Chats';
+import MatchFinder from './MatchFinder';
+import { chooseGroup } from './actions';
+import { connect } from 'react-redux';
+
+const containerStyle = {
+  height: '812px',
+  width: '375px',
+  margin: 50,
+  textAlign: 'left',
+  display: 'inline-block',
+  position: 'relative'
+};
 
 const App = (props) => {
   const [chosenRestaraunt, setChosenRestaraunt] = useState(null);
 
   useEffect(() => {
-    const action = chooseGroup(chosenRestaraunt.groups[0]._id);
-    props.dispatch(action);
-  }, []);
+    if (chosenRestaraunt && chosenRestaraunt.groups && chosenRestaraunt.groups.length > 0) {
+      const action = chooseGroup(chosenRestaraunt.groups[0]._id);
+      props.dispatch(action);
+    }
+  });
 
-  return <div>
+  return <div style={containerStyle}>
     {
       chosenRestaraunt ?
-        <Chat /> :
+        <Chats /> :
         <MatchFinder setChosenRestaraunt={(restaraunt) => {
           setChosenRestaraunt(restaraunt);
         }}
@@ -22,7 +35,7 @@ const App = (props) => {
   </div>
 }
 
-const mapStateToProps = function (state) {
+const mapStateToProps = function ({ chosenRestaraunt }) {
   return {};
 };
 
