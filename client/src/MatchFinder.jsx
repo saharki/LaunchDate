@@ -43,28 +43,30 @@ const MatchFinder = (props) => {
     useEffect(() => {
         axios.get('https://515fdb63.ngrok.io/restaurants')
             .then((result) => {
-                console.log(result.data);
                 setCurrentRestaraunts(result.data);
             });
     }, []);
-
 
     return (
         <Container>
             {
                 currentRestaraunts.length > 0 ?
-                    <RestarauntOption restaraunt={currentRestaraunts[0]} /> :
+                    (
+                        <div>
+                            <RestarauntOption restaraunt={currentRestaraunts[0]} />
+                            <Actions>
+                                <ThumbUp onClick={() => {
+                                    const chosenRestaraunt = currentRestaraunts[0];
+                                    props.setChosenRestaraunt(chosenRestaraunt);
+                                }} />
+                                <ThumbDown onClick={() => {
+                                    setCurrentRestaraunts(currentRestaraunts.slice(1, currentRestaraunts.length - 1));
+                                }} />
+                            </Actions>
+                        </div>
+                    ) :
                     <div>Sorry, no restaraunts to show!</div>
             }
-            <Actions>
-                <ThumbUp onClick={() => {
-                    const chosenRestaraunt = currentRestaraunts[0];
-                    props.setChoosenRestaraunt(chosenRestaraunt);
-                }} />
-                <ThumbDown onClick={() => {
-                    setCurrentRestaraunts(currentRestaraunts.slice(1, currentRestaraunts.length - 1));
-                }} />
-            </Actions>
         </Container>
     );
 }

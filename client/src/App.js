@@ -1,28 +1,21 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import { connect } from 'react-redux';
-
+import Chat from './Chat'
 import MatchFinder from './MatchFinder'
 
-class App extends Component {
-  render() {
-    return (
-      //   <Chat/>
-      <MatchFinder restaraunts={[{
-        "name": "McDonalds",
-        "description": "This is shit",
-        "logo": "https://www.google.co.il/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png",
-        "location": { "lon": 36, "lat": 36 },
-        "groups": [[{
-          "_id": "1234", "users": [
-            { "displayName": "Michael Vaisberg", "age": 30, "company": "Soluto", "role": "Developer" },
-            { "displayName": "Yair Simanovic", "age": 28, "company": "Facebook", "role": "Developer" },
-            { "displayName": "Itay Ben-Zvi", "age": 33, "company": "Freelance", "role": "Designer" }
-          ]
-        }]]
-      }]}
-        setChosenRestaraunt={() => { }} />
-    );
-  }
+const App = () => {
+  const [chosenRestaraunt, setChosenRestaraunt] = useState(null);
+
+  return <div>
+    {
+      chosenRestaraunt ?
+        <Chat /> :
+        <MatchFinder setChosenRestaraunt={(restaraunt) => {
+          setChosenRestaraunt(restaraunt);
+        }}
+        />
+    }
+  </div>
 }
 
 const mapStateToProps = function (state) {
