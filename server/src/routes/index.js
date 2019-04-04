@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const tenBis = require('../10bis');
 
 const app = express();
 app.use(bodyParser.json());
@@ -30,22 +31,23 @@ const groups = [
   }
 ];
 
-const restaurants = [
-  {
-    name: 'McDonalds',
-    logo: 'www.google.com',
-    description: 'come here and eat cheap burgers!',
-    thumbnail: '',
-    location: {
-      lon: 36,
-      lat: 36
-    },
-    groups
-  }
-];
+// const restaurants = [
+//   {
+//     name: 'McDonalds',
+//     logo: 'www.google.com',
+//     description: 'come here and eat cheap burgers!',
+//     thumbnail: '',
+//     location: {
+//       lon: 36,
+//       lat: 36
+//     },
+//     groups
+//   }
+// ];
 
 app.get('/restaurants', async (req, res) => {
-  res.send(restaurants);
+  let restaraunts = tenBis.getRestaurantsByAddress('Rotcshild 39, Tel Aviv');
+  res.send(restaraunts);
 });
 
 module.exports = app;
