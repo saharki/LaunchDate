@@ -54,6 +54,7 @@ const App = (props) => {
             restaraunt={currentRestaraunts[0]}
             setChosenRestaraunt={(restaraunt) => {
               setChosenRestaraunt(restaraunt);
+              setStatus('chat');
             }}
             removeRestaraunt={(restaraunt) => {
               setCurrentRestaraunts(props.currentRestaraunts.slice(1, props.currentRestaraunts.length - 1));
