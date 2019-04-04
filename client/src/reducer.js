@@ -1,13 +1,16 @@
-export function reducer(state = {}, action) {
+export function reducer(state = {
+    messages: [],
+    user: null,
+}, action) {
 
-    if (action.type === 'NEW_MSG'){
+    if (action.type === 'NEW_MSG') {
         state = Object.assign({}, state, {
-            messages: state.messages ? [ ...state.messages, action.msg] : [action.msg]
+            messages: state.messages ? [...state.messages, action.msg] : [action.msg]
         });
     }
 
-    if (action.type === 'ENTER_NAME'){
-        state = Object.assign({}, state, { name: action.name });
+    if (action.type === 'ENTER_NAME') {
+        state = { ...state, user: { name: action.name } }
     }
 
     return state;

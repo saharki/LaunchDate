@@ -45,7 +45,10 @@ class Chat extends Component {
     }
   }
   sendMsg(msg) {
-    this.socket.emit('msg', { text: msg, name: this.props.name });
+    const { user } = this.props
+    if(user) {
+      this.socket.emit('msg', { text: msg, name: user.name });
+    }
   }
   saveName(name) {
     this.setState({ open: false });
@@ -108,7 +111,7 @@ class Chat extends Component {
 const mapStateToProps = function (state) {
   return {
     messages: state.messages,
-    name: state.name
+    user: state.user
   };
 };
 

@@ -14,13 +14,13 @@ import { reducer } from './reducer';
 export const store = createStore(reducer, composeWithDevTools(applyMiddleware(reduxPromise)));
 
 const Main = () => (
-    <Provider store={store}>
-        <MuiThemeProvider>
-             <div className="main" >
-                 <App />
-             </div>
-        </MuiThemeProvider>
-    </Provider>
+  <Provider store={store}>
+    <MuiThemeProvider>
+      <div className="main" >
+        <App />
+      </div>
+    </MuiThemeProvider>
+  </Provider>
 );
 
 ReactDOM.render(<Main />, document.getElementById('root'));
