@@ -12,9 +12,20 @@ import TextField from 'material-ui/TextField';
 import Divider from 'material-ui/Divider';
 import Dialog from 'material-ui/Dialog';
 
+const MESSAGE_HEADER_STYLE = {
+  'font-size': '1em',
+  'font-weight': 500,
+  'line-height': '2rem',
+  'padding-left': '1em',
+  'width': '100%',
+  'position': 'sticky',
+  'top': 0,
+  'background': 'white'
+}
+
 const containerStyle = {
-  height: '812px',
-  width: '375px',
+  height: '85vh',
+  width: '25em',
   margin: 50,
   textAlign: 'left',
   display: 'inline-block',
@@ -72,13 +83,13 @@ class Chat extends Component {
     return (
       <Paper style={containerStyle} zDepth={4} >
         <AppBar style={{ textAlign: "center" }} showMenuIconButton={false} title="React Chat" />
-        <div style={{ overflow: "auto" }} ref={elem => this.chatWindow = elem}>
-          <List style={{ height: "350px" }}>
-            <Subheader>Messages:</Subheader>
+        <div style={{ overflow: "auto", height: "80%" }} ref={elem => this.chatWindow = elem}>
+          <List style={{ height: "100%" }}>
+            <Subheader style={MESSAGE_HEADER_STYLE}>Messages:</Subheader>
             {listItems}
           </List>
         </div>
-        <TextField style={{ position: "absolute", bottom: 0, margin: '10px' }}
+        <TextField style={{ position: "absolute", bottom: 0, margin: '.75em' }}
           floatingLabelText="Your message:"
 
           onKeyPress={(e) => {
