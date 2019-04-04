@@ -53,11 +53,12 @@ const App = (props) => {
           <MatchFinder
             restaraunt={currentRestaraunts[0]}
             setChosenRestaraunt={(restaraunt) => {
+              setCurrentRestaraunts(currentRestaraunts.slice(1, currentRestaraunts.length - 1));
               setChosenRestaraunt(restaraunt);
               setStatus('chat');
             }}
             removeRestaraunt={(restaraunt) => {
-              setCurrentRestaraunts(props.currentRestaraunts.slice(1, props.currentRestaraunts.length - 1));
+              setCurrentRestaraunts(currentRestaraunts.slice(1, currentRestaraunts.length - 1));
             }}
           /> :
           <Chats />
