@@ -47,7 +47,7 @@ class Chat extends Component {
   }
 
   componentWillMount() {
-    axios.get('https://f2fd39cd.ngrok.io/restaurants')
+    axios.get('http://localhost:3001/restaurants')
     .then((result) => {
       this.props.dispatch(setRestaraunts(result.data))
     })

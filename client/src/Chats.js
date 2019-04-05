@@ -11,6 +11,11 @@ const containerStyle = {
 };
 
 class Chats extends Component {
+  componentDidMount() {
+    console.log(this.props);
+    const action = chooseGroup(this.props.match.params.id);
+    this.props.dispatch(action);
+  }
 
   chooseGroup = (groupId) => {
     return this.props.dispatch(chooseGroup(groupId))
@@ -19,11 +24,11 @@ class Chats extends Component {
   render() {
     const { chosenGroupId } = this.props
 
-    if(chosenGroupId)  {
+    if (chosenGroupId) {
       return <ChatDialog style={containerStyle} />
     }
-    
-    return (<ChatsList style={containerStyle}/>)
+
+    return (<ChatsList style={containerStyle} />)
   }
 }
 

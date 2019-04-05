@@ -21,6 +21,8 @@
     "material-ui": "^0.19.4",
     "node-geocoder": "^3.22.0",
     "promise": "^8.0.3",
+    "react-router": "^5.0.0",
+    "react-router-dom": "^5.0.0",
     "request": "^2.88.0",
     "socket.io": "^2.0.4",
     "styled-components": "^4.2.0"

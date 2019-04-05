@@ -23,11 +23,11 @@ export function setRestaraunts(restaraunts) {
 }
 
 export function createGroup(restarauntId, user) {
-    return axios.post(`https://f2fd39cd.ngrok.io/restaurants/${restarauntId}/groups`, [user])
+    return axios.post(`http://localhost:3001/restaurants/${restarauntId}/groups`, [user])
 }
 
 export function addUserToGroup(restarauntId, groupId, user) {
-    return axios.post(`https://f2fd39cd.ngrok.io/restaurants/${restarauntId}/groups/${groupId}/user`, user)
+    return axios.post(`http://localhost:3001/restaurants/${restarauntId}/groups/${groupId}/user`, user)
     // return {
     //     type: 'ADD_USER_TO_RESTARAUNT',
     //     restarauntId,
