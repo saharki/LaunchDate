@@ -32,7 +32,27 @@ app.get('/restaurants', async (req, res) => {
         lon: _.ResGeoLocation_lon,
         lat: _.ResGeoLocation_lat
       },
-      groups: []
+      groups: [
+        {
+          "_id": "0c6dd4db-186b-47dc-b908-b81fe6656938",
+          "members": [
+            {
+              "displayName": "Freddie",
+              "gender": "male",
+              "age": 35,
+              "role": "developer",
+              "company": "Soluto"
+            },
+            {
+              "displayName": "Sahar",
+              "gender": "male",
+              "age": 22,
+              "role": "Designer",
+              "company": "Soluto"
+            }
+          ]
+        }
+      ]
     }
   }));
 });
