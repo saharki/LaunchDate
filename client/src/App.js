@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Chats from './Chats';
 import MatchFinder from './MatchFinder';
-import { chooseGroup } from './actions';
+import { chooseGroup, addUserToGroup } from './actions';
 import { connect } from 'react-redux';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import axios from 'axios';
@@ -27,7 +27,7 @@ const App = (props) => {
   const [status, setStatus] = useState('pending');
   const [currentRestaraunts, setCurrentRestaraunts] = useState([]);
   const [chosenRestaraunt, setChosenRestaraunt] = useState(null);
-  const { classes } = props;
+  const { classes,dispatch, user } = props;
 
   useEffect(() => {
     axios.get('https://f2fd39cd.ngrok.io/restaurants')
@@ -40,7 +40,7 @@ const App = (props) => {
 
   useEffect(() => {
     if (chosenRestaraunt && chosenRestaraunt.groups && chosenRestaraunt.groups.length > 0) {
-      const action = chooseGroup(chosenRestaraunt.groups[0]._id);
+      const action = chooseGroup(chosenRestaraunt.name);
       props.dispatch(action);
     }
   });
@@ -55,6 +55,7 @@ const App = (props) => {
             setChosenRestaraunt={(restaraunt) => {
               setCurrentRestaraunts(currentRestaraunts.slice(1, currentRestaraunts.length - 1));
               setChosenRestaraunt(restaraunt);
+              dispatch(addUserToGroup(restaraunt.name, user))
               setStatus('chat');
             }}
             removeRestaraunt={(restaraunt) => {
@@ -70,8 +71,10 @@ App.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = function ({ chosenRestaraunt }) {
-  return {};
+const mapStateToProps = function (state) {
+  return {
+    user: state.user,
+  };
 };
 
 export default withStyles(styles)(connect(mapStateToProps)(App));

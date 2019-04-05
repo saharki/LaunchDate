@@ -1,7 +1,7 @@
 export function reducer(state = {
-    groups: {
+    restaraunts: {
         'vitrina': {
-            messages: [],
+            groups: [],
         }
     },
     user: {
@@ -11,13 +11,18 @@ export function reducer(state = {
 }, action) {
 
     if (action.type === 'NEW_MSG') {
-        const groupState = state.groups[action.groupId] ? {...state.groups[action.groupId]} : {}
         state = Object.assign({}, state, {
-            groups: {
-                ...action.groups,
+            restaraunts: {
+                ...action.restaraunts,
                 [action.groupId]: {
-                    ...groupState,
-                    messages: state.groups[action.groupId] ? [...state.groups[action.groupId].messages, action.msg] : [action.msg]
+                    ...state.restaraunts[action.groupId],
+                    groups: [
+                        {
+                            ...state.restaraunts[action.groupId].groups[0],
+                            messages: state.restaraunts[action.groupId].groups[0] ? [...state.restaraunts[action.groupId].groups[0].messages, action.msg] : [action.msg]
+                        }
+                    ]
+                    
                 }
             }
         });
@@ -25,6 +30,25 @@ export function reducer(state = {
 
     if (action.type === 'CHOOSE_GROUP') {
         state = { ...state, chosenGroupId: action.groupId }
+    }
+
+    if (action.type === 'SET_RESTARAUNTS') {
+        const restaraunts = action.restaraunts.reduce((restaraunts, rest) => {
+            restaraunts[rest.name] = {...rest, messages: []}
+            return restaraunts
+        }, {})
+        state = { ...state, restaraunts }
+    }
+
+    if (action.type === 'ADD_USER_TO_RESTARAUNT') {
+        if(!state.restaraunts[action.restarauntId]) {
+            state.restaraunts[action.restarauntId] = {name: action.restarauntId, groups: []}
+        }
+        let group = state.restaraunts[action.restarauntId].groups[0] || {_id: '1234', users: [], messages: []}
+        group = {...group, messages: [], users: [...group.users, action.user]}
+        const groups = [group]
+        const restaraunt = {...state.restaraunts[action.restarauntId], groups}
+        state = { ...state, restaraunts: {...action.restaraunts, [restaraunt.name]: restaraunt} }
     }
 
     if (action.type === 'ENTER_NAME') {

@@ -5,6 +5,11 @@ import { chooseGroup } from './actions'
 import ChatDialog from './ChatDialog'
 import ChatsList from './ChatsList'
 
+const containerStyle = {
+  height: '100%',
+  width: '100%',
+};
+
 class Chats extends Component {
 
   chooseGroup = (groupId) => {
@@ -15,10 +20,10 @@ class Chats extends Component {
     const { chosenGroupId } = this.props
 
     if(chosenGroupId)  {
-      return <ChatDialog />
+      return <ChatDialog style={containerStyle} />
     }
     
-    return (<ChatsList/>)
+    return (<ChatsList style={containerStyle}/>)
   }
 }
 

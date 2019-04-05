@@ -10,6 +10,11 @@ import Divider from 'material-ui/Divider';
 
 import { chooseGroup } from './actions'
 
+const containerStyle = {
+  height: '100%',
+  width: '100%',
+};
+
 class Chat extends Component {
   constructor() {
     super();
@@ -23,17 +28,17 @@ class Chat extends Component {
   chooseGroup = (groupId) => this.props.dispatch(chooseGroup(groupId))
 
   render() {
-    const { groups } = this.props;
+    const { restaraunts } = this.props;
     let groupsList = null;
 
-    if (groups) {
-      groupsList = Object.keys(groups).map((groupId) => {
-        const lastMessage = groups[groupId].messages[groups[groupId].messages.length - 1]
-        return <div key={groupId}>
+    if (restaraunts) {
+      groupsList = Object.keys(restaraunts).map((restarauntId) => {
+        const lastMessage = restaraunts[restarauntId].groups[0].messages[restaraunts[restarauntId].groups[0].messages.length - 1]
+        return <div key={restarauntId}>
           <ListItem 
-            onClick={() => this.chooseGroup(groupId)}
+            onClick={() => this.chooseGroup(restarauntId)}
           >
-            <p>{groupId} </p>
+            <p>{restarauntId} </p>
             <p>{lastMessage}</p>
           </ListItem>
           <Divider />
@@ -42,7 +47,7 @@ class Chat extends Component {
     }
 
     return (
-      <Paper zDepth={4} >
+      <Paper style={containerStyle} zDepth={4} >
         <AppBar style={{ textAlign: "center" }} showMenuIconButton={false} title="React Chat" />
         <div style={{ overflow: "auto" }} ref={elem => this.chatWindow = elem}>
           <List style={{ height: "350px" }}>
@@ -57,7 +62,7 @@ class Chat extends Component {
 
 const mapStateToProps = function (state, props) {
   return {
-    groups: state.groups,
+    restaraunts: state.restaraunts,
   };
 };
 

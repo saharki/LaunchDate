@@ -91,7 +91,7 @@ class Chat extends Component {
 
 const mapStateToProps = function (state, props) {
   return {
-    messages: state.chosenGroupId && state.groups[state.chosenGroupId].messages,
+    messages: state.chosenGroupId && state.restaraunts[state.chosenGroupId].groups[0].messages,
     user: state.user,
     groupId: state.chosenGroupId,
   };

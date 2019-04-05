@@ -9,7 +9,22 @@ export function newMsg(data) {
 export function chooseGroup(groupId) {
     return {
         type: 'CHOOSE_GROUP',
-        groupId
+        groupId,
+    };
+}
+
+export function setRestaraunts(restaraunts) {
+    return {
+        type: 'SET_RESTARAUNTS',
+        restaraunts
+    };
+}
+
+export function addUserToGroup(restarauntId, user) {
+    return {
+        type: 'ADD_USER_TO_RESTARAUNT',
+        restarauntId,
+        user,
     };
 }
 
