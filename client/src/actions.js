@@ -1,3 +1,5 @@
+import axios from  'axios'
+
 export function newMsg(data) {
     return {
         type: 'NEW_MSG',
@@ -20,12 +22,17 @@ export function setRestaraunts(restaraunts) {
     };
 }
 
-export function addUserToGroup(restarauntId, user) {
-    return {
-        type: 'ADD_USER_TO_RESTARAUNT',
-        restarauntId,
-        user,
-    };
+export function createGroup(restarauntId, user) {
+    return axios.post(`https://f2fd39cd.ngrok.io/restaurants/${restarauntId}/groups`, [user])
+}
+
+export function addUserToGroup(restarauntId, groupId, user) {
+    return axios.post(`https://f2fd39cd.ngrok.io/restaurants/${restarauntId}/groups/${groupId}`, user)
+    // return {
+    //     type: 'ADD_USER_TO_RESTARAUNT',
+    //     restarauntId,
+    //     user,
+    // };
 }
 
 export function enterName(name) {
