@@ -78,25 +78,22 @@ app.get('/restaurants', async (req, res) => {
   let filtered = restaraunts.filter(_ => _.address !== 'Location');
   filtered.forEach(_ => {
     _.groups = groups.filter(__ => __.restarauntName === _.name);
-    if (_.groups.length <= 0) {
+    if (!_.groups || _.groups.length <= 0) {
+      _.groups = [];
       _.groups.push({
-        "_id": "631f571a-67d3-458c-8ae6-deaa29fce12a",
-        "members": [
-          {
-            "name": uuid(),
-            "thumbnail": BASE_THUMBNAIL_URL.replace("****", index)
-          },
-          {
-            "name": uuid(),
-            "thumbnail": BASE_THUMBNAIL_URL.replace("****", index)
-          },
-          {
-            "name": uuid(),
-            "thumbnail": BASE_THUMBNAIL_URL.replace("****", index)
-          }
-        ],
-        "restarauntName": _.name
-      })
+        "_id": uuid(),
+        members: []
+      });
+
+      for (let i = 0; i < 5; i++) {
+        index = (index + 1) % 50;
+        let url = BASE_THUMBNAIL_URL.replace("****", index);
+        console.log(url);
+        _.groups[0].members.push({
+          "name": uuid(),
+          "thumbnail": url
+        });
+      }
     }
   });
 
