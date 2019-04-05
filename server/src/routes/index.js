@@ -18,7 +18,7 @@ tenBis
         logo: _.RestaurantLogoUrl,
         thumbnail: _.RestaurantLogoUrl,
         address: _.RestaurantAddress,
-        tags: _.RestaurantCuisineList.split(", "),
+        tags: _.RestaurantCuisineList.split(",").map(tag => tag.trim()),
         rating: _.ReviewsRank,
         location: {
           lon: _.ResGeoLocation_lon,
@@ -50,13 +50,12 @@ tenBis
         _.address = translation.translatedText;
       });
 
-      googleTranslate.translate(_.tags.join(";"), 'en', function (err, translation) {
+      googleTranslate.translate(_.tags.join(","), 'en', function (err, translation) {
         if (err) {
           console.error(err);
           return;
         }
-
-        _.tags = translation.translatedText.split(";");
+        _.tags = translation.translatedText.split(",").map(tag => tag.trim()).filter(tag => !!tag);
       });
     });
   });
@@ -94,13 +93,13 @@ app.get('/users', async (req, res) => {
 
 app.post('/restaurants/:name/groups', async (req, res) => {
   const newGroupId = uuid.v4();
-  groups.push({ _id: newGroupId, members: req.body, restarauntName: req.params.name });
+  groups.push({ _id: newGroupId, members: req.body, restaurantName: req.params.name });
   await fs.writeFile('./data/groups.json', JSON.stringify(groups));
   res.send(newGroupId);
 });
 
 app.post('/restaurants/:name/groups/:_id/user', async (req, res) => {
-  const group = groups.filter(group => group._id === req.params._id && group.restarauntName === req.params.name)[0];
+  const group = groups.filter(group => group._id === req.params._id && group.restaurantName === req.params.name)[0];
   group.members.push(req.body);
   await fs.writeFile('./data/groups.json', JSON.stringify(groups));
   res.send(200);
