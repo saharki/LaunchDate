@@ -1,0 +1,143 @@
+[
+  {
+    "name": "Jackies' chef pizza",
+    "tags": [
+      "italian",
+      "pizza",
+      "salad"
+    ],
+    "logo": "https://d25t2285lxl5rf.cloudfront.net/images/shops/24355.png",
+    "thumbnail": "https://media-cdn.tripadvisor.com/media/photo-s/0b/c1/72/68/front-view-of-restaurant.jpg",
+    "rating": 3.5,
+    "location": {
+      "lon": 36,
+      "lat": 36
+    },
+    "groups": [
+      {
+        "_id": "1234",
+        "users": [
+          {
+            "displayName": "Michael Vaisberg",
+            "age": 30,
+            "company": "Soluto",
+            "role": "Developer"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Tamara",
+    "tags": [
+      "ice cream",
+      "pastries"
+    ],
+    "logo": "https://d25t2285lxl5rf.cloudfront.net/images/shops/25523.jpg",
+    "thumbnail": "https://media-cdn.tripadvisor.com/media/photo-s/0b/c1/72/68/front-view-of-restaurant.jpg",
+    "rating": 4.5,
+    "location": {
+      "lon": 36,
+      "lat": 36
+    },
+    "groups": []
+  },
+  {
+    "name": "Bis Bis toasts",
+    "tags": [
+      "italian",
+      "toast",
+      "sandwich",
+      "salad"
+    ],
+    "logo": "https://d25t2285lxl5rf.cloudfront.net/images/shops/25291.jpg",
+    "thumbnail": "https://media-cdn.tripadvisor.com/media/photo-s/0b/c1/72/68/front-view-of-restaurant.jpg",
+    "rating": 3.5,
+    "location": {
+      "lon": 36,
+      "lat": 36
+    },
+    "groups": []
+  },
+  {
+    "name": "Mozes",
+    "tags": [
+      "burger",
+      "meat",
+      "sandwich"
+    ],
+    "logo": "https://d25t2285lxl5rf.cloudfront.net/images/shops/5043.gif",
+    "thumbnail": "https://media-cdn.tripadvisor.com/media/photo-s/0b/c1/72/68/front-view-of-restaurant.jpg",
+    "rating": 3,
+    "location": {
+      "lon": 36,
+      "lat": 36
+    },
+    "groups": []
+  },
+  {
+    "name": "Hasushia",
+    "tags": [
+      "asian",
+      "sushi"
+    ],
+    "logo": "https://d25t2285lxl5rf.cloudfront.net/images/shops/4189.jepg",
+    "thumbnail": "https://media-cdn.tripadvisor.com/media/photo-s/0b/c1/72/68/front-view-of-restaurant.jpg",
+    "rating": 4,
+    "location": {
+      "lon": 36,
+      "lat": 36
+    },
+    "groups": []
+  },
+  {
+    "name": "Okinawa",
+    "tags": [
+      "asian",
+      "sushi"
+    ],
+    "logo": "https://d25t2285lxl5rf.cloudfront.net/images/shops/22408.jpg",
+    "thumbnail": "https://media-cdn.tripadvisor.com/media/photo-s/0b/c1/72/68/front-view-of-restaurant.jpg",
+    "rating": 3.5,
+    "location": {
+      "lon": 36,
+      "lat": 36
+    },
+    "groups": []
+  },
+  {
+    "name": "Caspi",
+    "tags": [
+      "hummus",
+      "salad"
+    ],
+    "logo": "https://d25t2285lxl5rf.cloudfront.net/images/shops/22147.png",
+    "thumbnail": "https://media-cdn.tripadvisor.com/media/photo-s/0b/c1/72/68/front-view-of-restaurant.jpg",
+    "rating": 4,
+    "location": {
+      "lon": 36,
+      "lat": 36
+    },
+    "groups": [
+      {
+        "_id": "0c6dd4db-186b-47dc-b908-b81fe6656938",
+        "users": [
+          {
+            "displayName": "Freddie",
+            "gender": "male",
+            "age": 35,
+            "role": "developer",
+            "company": "Soluto"
+          },
+          {
+            "displayName": "Sahar",
+            "gender": "male",
+            "age": 22,
+            "role": "Designer",
+            "company": "Soluto"
+          }
+        ]
+      }
+    ]
+  }
+]

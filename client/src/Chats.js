@@ -3,25 +3,32 @@ import { connect } from 'react-redux';
 
 import { chooseGroup } from './actions'
 import ChatDialog from './ChatDialog'
-// import ChatsList from './ChatsList'
+import ChatsList from './ChatsList'
+
+const containerStyle = {
+  height: '100%',
+  width: '100%',
+};
 
 class Chats extends Component {
+  componentDidMount() {
+    console.log(this.props);
+    const action = chooseGroup(this.props.match.params.id);
+    this.props.dispatch(action);
+  }
 
   chooseGroup = (groupId) => {
     return this.props.dispatch(chooseGroup(groupId))
   }
 
   render() {
-    // const {chosenGroupId} = this.state
-    return (
-      // {
-        // chosenGroupId ? 
-        // <ChatsList/> :
-        <ChatDialog 
-          groupId='vitrina'
-        />
-      // }
-    );
+    const { chosenGroupId } = this.props
+
+    if (chosenGroupId) {
+      return <ChatDialog style={containerStyle} />
+    }
+
+    return (<ChatsList style={containerStyle} />)
   }
 }
 

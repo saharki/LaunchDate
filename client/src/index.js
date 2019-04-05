@@ -17,7 +17,7 @@ const Main = () => (
   <Provider store={store}>
     <MuiThemeProvider>
       <div className="main" >
-        <App />
+          <App />
       </div>
     </MuiThemeProvider>
   </Provider>
