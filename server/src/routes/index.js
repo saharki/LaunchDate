@@ -92,9 +92,17 @@ app.get('/users', async (req, res) => {
   res.send(users);
 });
 
+const BASE_THUMBNAIL_URL = `https://randomuser.me/api/portraits/men/****.jpg`;
+index = 10;
+
 app.post('/restaurants/:name/groups', async (req, res) => {
   const newGroupId = uuid.v4();
-  groups.push({ _id: newGroupId, members: req.body, restarauntName: req.params.name });
+  groups.push({
+    _id: newGroupId, members: req.body.map(_ => {
+      _.thumbnail = BASE_THUMBNAIL_URL.replace("****", ++index);
+      return _;
+    }), restarauntName: req.params.name
+  });
   await fs.writeFile('./data/groups.json', JSON.stringify(groups));
   res.send(newGroupId);
 });
