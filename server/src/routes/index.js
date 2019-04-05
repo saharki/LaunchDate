@@ -23,8 +23,7 @@ tenBis
         location: {
           lon: _.ResGeoLocation_lon,
           lat: _.ResGeoLocation_lat
-        },
-        groups: groups.filter(_ => _.restarauntName === _.RestaurantName)
+        }
       }
     });
 
@@ -73,7 +72,11 @@ const defaultUser = {
 }
 
 app.get('/restaurants', async (req, res) => {
-  res.send(restaraunts.filter(_ => _.address != 'Location'));
+  let filtered = restaraunts.filter(_ => _.address !== 'Location');
+  filtered.forEach(_ => {
+    _.groups = groups.filter(_ => _.restarauntName === _.RestaurantName);
+  });
+  res.send(filtered);
 });
 
 app.post('/users', async (req, res) => {
