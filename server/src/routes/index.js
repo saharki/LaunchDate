@@ -87,7 +87,7 @@ app.get('/restaurants', async (req, res) => {
       groups: [
         {
           "_id": uuid(),
-          "members": [
+          "users": [
             {
               "displayName": "Freddie",
               "gender": "male",
@@ -126,14 +126,14 @@ app.get('/users', async (req, res) => {
 
 app.post('/restaurants/:name/groups', async (req, res) => {
   const newGroupId = uuid.v4();
-  groups.push({ _id: newGroupId, members: req.body, restarauntName: req.params.name });
+  groups.push({ _id: newGroupId, users: req.body, restarauntName: req.params.name });
   await fs.writeFile('./data/groups.json', JSON.stringify(groups));
   res.send(newGroupId);
 });
 
 app.post('/restaurants/:name/groups/:_id/user', async (req, res) => {
   const group = groups.filter(group => group._id === req.params._id && group.restarauntName === req.params.name)[0];
-  group.members.push(req.body);
+  group.users.push(req.body);
   await fs.writeFile('./data/groups.json', JSON.stringify(groups));
   res.send(200);
 });
