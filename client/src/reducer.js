@@ -58,7 +58,7 @@ export function reducer(state = {
                     groups: [
                         {
                             ...state.restaraunts[action.groupId].groups[0],
-                            messages: state.restaraunts[action.groupId].groups[0] ? [...state.restaraunts[action.groupId].groups[0].messages, action.msg] : [action.msg]
+                            messages: state.restaraunts[action.groupId].groups[0] ? [...(state.restaraunts[action.groupId].groups[0].messages || []), action.msg] : [action.msg]
                         }
                     ]
                     
