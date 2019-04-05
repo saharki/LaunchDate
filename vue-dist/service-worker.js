@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/precache-manifest.08b00ebb5b6a669b91016c5edb4d51fd.js"
+  "/precache-manifest.29a631e20e35656ea5186822f01d205b.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "vue-food-tinder"});
