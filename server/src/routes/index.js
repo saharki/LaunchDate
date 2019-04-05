@@ -18,7 +18,7 @@ tenBis
         logo: _.RestaurantLogoUrl,
         thumbnail: _.RestaurantLogoUrl,
         address: _.RestaurantAddress,
-        tags: _.RestaurantCuisineList.split(", "),
+        tags: _.RestaurantCuisineList.split(",").map(tag => tag.trim()),
         rating: _.ReviewsRank,
         location: {
           lon: _.ResGeoLocation_lon,
@@ -34,6 +34,7 @@ tenBis
     tenBidRestaraunts.forEach(_ => {
       googleTranslate.translate(_.name, 'en', function (err, translation) {
         if (err) {
+          console.error(err);
           return;
         }
 
@@ -42,18 +43,19 @@ tenBis
 
       googleTranslate.translate(_.address, 'en', function (err, translation) {
         if (err) {
+          console.error(err);
           return;
         }
-        
+
         _.address = translation.translatedText;
       });
 
-      googleTranslate.translate(_.tags.join(";"), 'en', function (err, translation) {
+      googleTranslate.translate(_.tags.join(","), 'en', function (err, translation) {
         if (err) {
+          console.error(err);
           return;
         }
-
-        _.tags = translation.translatedText.split(";");
+        _.tags = translation.translatedText.split(",").map(tag => tag.trim()).filter(tag => !!tag);
       });
     });
   });
@@ -71,42 +73,7 @@ const defaultUser = {
 }
 
 app.get('/restaurants', async (req, res) => {
-  let restaraunts1 = await tenBis.getRestaurantsByAddress('Rotcshild 39, Tel Aviv');
-  res.send(restaraunts1.map(_ => {
-    return {
-      name: _.RestaurantName,
-      logo: _.RestaurantLogoUrl,
-      thumbnail: _.RestaurantLogoUrl,
-      address: _.RestaurantAddress,
-      tags: _.RestaurantCuisineList.split(", "),
-      rating: _.ReviewsRank / 2,
-      location: {
-        lon: _.ResGeoLocation_lon,
-        lat: _.ResGeoLocation_lat
-      },
-      groups: [
-        {
-          "_id": uuid(),
-          "users": [
-            {
-              "displayName": "Freddie",
-              "gender": "male",
-              "age": 35,
-              "role": "developer",
-              "company": "Soluto"
-            },
-            {
-              "displayName": "Sahar",
-              "gender": "male",
-              "age": 22,
-              "role": "Designer",
-              "company": "Soluto"
-            }
-          ]
-        }
-      ]
-    }
-  }));
+  res.send(restaraunts.filter(_ => _.address != 'Location'));
 });
 
 app.post('/users', async (req, res) => {
@@ -124,16 +91,24 @@ app.get('/users', async (req, res) => {
   res.send(users);
 });
 
+const BASE_THUMBNAIL_URL = `https://randomuser.me/api/portraits/men/****.jpg`;
+index = 10;
+
 app.post('/restaurants/:name/groups', async (req, res) => {
   const newGroupId = uuid.v4();
-  groups.push({ _id: newGroupId, users: req.body, restarauntName: req.params.name });
+  groups.push({
+    _id: newGroupId, members: req.body.map(_ => {
+      _.thumbnail = BASE_THUMBNAIL_URL.replace("****", ++index);
+      return _;
+    }), restarauntName: req.params.name
+  });
   await fs.writeFile('./data/groups.json', JSON.stringify(groups));
   res.send(newGroupId);
 });
 
 app.post('/restaurants/:name/groups/:_id/user', async (req, res) => {
-  const group = groups.filter(group => group._id === req.params._id && group.restarauntName === req.params.name)[0];
-  group.users.push(req.body);
+  const group = groups.filter(group => group._id === req.params._id && group.restaurantName === req.params.name)[0];
+  group.members.push(req.body);
   await fs.writeFile('./data/groups.json', JSON.stringify(groups));
   res.send(200);
 });
