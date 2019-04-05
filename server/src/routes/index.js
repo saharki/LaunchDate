@@ -10,46 +10,6 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-const groups = [
-  {
-    _id: '1234',
-    users: [
-      {
-        displayName: 'Michael Vaisberg',
-        age: 30,
-        company: 'Soluto',
-        role: 'Developer'
-      },
-      {
-        displayName: 'Yair Simanovic',
-        age: 28,
-        company: 'Facebook',
-        role: 'Developer'
-      },
-      {
-        displayName: 'Itay Ben-Zvi',
-        age: 33,
-        company: 'Freelance',
-        role: 'Designer'
-      }
-    ]
-  }
-];
-
-const restaurants = [
-  {
-    name: 'McDonalds',
-    logo: 'www.google.com',
-    description: 'come here and eat cheap burgers!',
-    thumbnail: '',
-    location: {
-      lon: 36,
-      lat: 36
-    },
-    groups
-  }
-];
-
 const defaultUser = {
   displayName: 'User',
   age: 30,
@@ -59,12 +19,26 @@ const defaultUser = {
 }
 
 app.get('/restaurants', async (req, res) => {
-  let restaraunts = tenBis.getRestaurantsByAddress('Rotcshild 39, Tel Aviv');
-  res.send(restaraunts);
+  let restaraunts1 = await tenBis.getRestaurantsByAddress('Rotcshild 39, Tel Aviv');
+  res.send(restaraunts1.map(_ => {
+    return {
+      name: _.RestaurantName,
+      logo: _.RestaurantLogoUrl,
+      thumbnail: _.RestaurantLogoUrl,
+      address: _.RestaurantAddress,
+      tags: _.RestaurantCuisineList.split(", "),
+      rating: _.ReviewsRank,
+      location: {
+        lon: _.ResGeoLocation_lon,
+        lat: _.ResGeoLocation_lat
+      },
+      groups: []
+    }
+  }));
 });
 
 app.post('/users', async (req, res) => {
-  const usersFile = await fs.readFile('./data/users.json');  
+  const usersFile = await fs.readFile('./data/users.json');
   const users = JSON.parse(usersFile);
   const user = { ...defaultUser, ...req.body }
   users.push(user);
@@ -73,7 +47,7 @@ app.post('/users', async (req, res) => {
 });
 
 app.get('/users', async (req, res) => {
-  const usersFile = await fs.readFile('./data/users.json');  
+  const usersFile = await fs.readFile('./data/users.json');
   const users = JSON.parse(usersFile);
   res.send(users);
 });
