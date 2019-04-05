@@ -74,7 +74,7 @@ const defaultUser = {
 app.get('/restaurants', async (req, res) => {
   let filtered = restaraunts.filter(_ => _.address !== 'Location');
   filtered.forEach(_ => {
-    _.groups = groups.filter(_ => _.restarauntName === _.RestaurantName);
+    _.groups = groups.filter(__ => __.restarauntName === _.name);
   });
   res.send(filtered);
 });
