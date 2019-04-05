@@ -74,7 +74,7 @@ const defaultUser = {
 }
 
 app.get('/restaurants', async (req, res) => {
-  res.send(restaraunts);
+  res.send(restaraunts.filter(_ => _.address != 'Location'));
 });
 
 app.post('/users', async (req, res) => {
