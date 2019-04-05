@@ -57,13 +57,13 @@ const App = (props) => {
               setCurrentRestaraunts(currentRestaraunts.slice(1, currentRestaraunts.length - 1));
               setChosenRestaraunt(restaraunt);
               if(restaraunt.groups.length <= 0 ){
-                await dispatch(createGroup(restaraunt.name, user))
+                await createGroup(restaraunt.name, user)
               }
               else {
-                await dispatch(addUserToGroup(restaraunt.name, restaraunt.groups[0]._id, user))
+                await addUserToGroup(restaraunt.name, restaraunt.groups[0]._id, user)
               }
               const result = await axios.get('https://f2fd39cd.ngrok.io/restaurants')
-              this.props.dispatch(setRestaraunts(result.data))
+              dispatch(setRestaraunts(result.data))
               setStatus('chat');
             }}
             removeRestaraunt={(restaraunt) => {

@@ -27,7 +27,7 @@ export function createGroup(restarauntId, user) {
 }
 
 export function addUserToGroup(restarauntId, groupId, user) {
-    return axios.post(`https://f2fd39cd.ngrok.io/restaurants/${restarauntId}/groups/${groupId}`, user)
+    return axios.post(`https://f2fd39cd.ngrok.io/restaurants/${restarauntId}/groups/${groupId}/user`, user)
     // return {
     //     type: 'ADD_USER_TO_RESTARAUNT',
     //     restarauntId,

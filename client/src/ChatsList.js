@@ -15,6 +15,26 @@ const containerStyle = {
   width: '100%',
 };
 
+const styles = {
+  root: {
+    flexGrow: 1,
+  },
+  grow: {
+    flexGrow: 1,
+  },
+  menuButton: {
+    marginLeft: -12,
+    marginRight: 20,
+  },
+  chat: {
+    margin: '20px',
+    borderColor: 'black',
+    borderStyle: 'solid',
+    borderRadius: '15px',
+    borderWidth: '3px',
+  }
+};
+
 class Chat extends Component {
   constructor() {
     super();
@@ -36,6 +56,7 @@ class Chat extends Component {
         const lastMessage = restaraunts[restarauntId].groups[0].messages[restaraunts[restarauntId].groups[0].messages.length - 1]
         return <div key={restarauntId}>
           <ListItem 
+            style={styles.chat}
             onClick={() => this.chooseGroup(restarauntId)}
           >
             <p>{restarauntId} </p>
@@ -48,7 +69,7 @@ class Chat extends Component {
 
     return (
       <Paper style={containerStyle} zDepth={4} >
-        <AppBar style={{ textAlign: "center" }} showMenuIconButton={false} title="React Chat" />
+        <AppBar style={{ textAlign: "center" }} showMenuIconButton={true} title="React Chat" />
         <div style={{ overflow: "auto" }} ref={elem => this.chatWindow = elem}>
           <List style={{ height: "350px" }}>
             <Subheader>Groups:</Subheader>
