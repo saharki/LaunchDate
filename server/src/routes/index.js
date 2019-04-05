@@ -34,6 +34,7 @@ tenBis
     tenBidRestaraunts.forEach(_ => {
       googleTranslate.translate(_.name, 'en', function (err, translation) {
         if (err) {
+          console.error(err);
           return;
         }
 
@@ -42,14 +43,16 @@ tenBis
 
       googleTranslate.translate(_.address, 'en', function (err, translation) {
         if (err) {
+          console.error(err);
           return;
         }
-        
+
         _.address = translation.translatedText;
       });
 
       googleTranslate.translate(_.tags.join(";"), 'en', function (err, translation) {
         if (err) {
+          console.error(err);
           return;
         }
 
@@ -71,42 +74,7 @@ const defaultUser = {
 }
 
 app.get('/restaurants', async (req, res) => {
-  let restaraunts1 = await tenBis.getRestaurantsByAddress('Rotcshild 39, Tel Aviv');
-  res.send(restaraunts1.map(_ => {
-    return {
-      name: _.RestaurantName,
-      logo: _.RestaurantLogoUrl,
-      thumbnail: _.RestaurantLogoUrl,
-      address: _.RestaurantAddress,
-      tags: _.RestaurantCuisineList.split(", "),
-      rating: _.ReviewsRank / 2,
-      location: {
-        lon: _.ResGeoLocation_lon,
-        lat: _.ResGeoLocation_lat
-      },
-      groups: [
-        {
-          "_id": uuid(),
-          "members": [
-            {
-              "displayName": "Freddie",
-              "gender": "male",
-              "age": 35,
-              "role": "developer",
-              "company": "Soluto"
-            },
-            {
-              "displayName": "Sahar",
-              "gender": "male",
-              "age": 22,
-              "role": "Designer",
-              "company": "Soluto"
-            }
-          ]
-        }
-      ]
-    }
-  }));
+  res.send(restaraunts);
 });
 
 app.post('/users', async (req, res) => {
