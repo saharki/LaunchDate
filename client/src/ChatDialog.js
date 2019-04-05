@@ -49,7 +49,7 @@ class Chat extends Component {
   goBack = () => this.props.dispatch(chooseGroup(null))
 
   render() {
-    const { messages, groupId } = this.props;
+    const { messages, groupId, users } = this.props;
     let listItems = null;
 
     if (messages) {
@@ -70,7 +70,12 @@ class Chat extends Component {
         </AppBar>
           <div style={{ overflow: "auto" }} ref={elem => this.chatWindow = elem}> 
           <List style={{ height: "350px" }}>
-            <Subheader>Messages:</Subheader>
+            <Subheader>
+              <div>
+              users: {users.map((user) => user.name).join(', ')}
+              </div>
+              Messages:
+            </Subheader>
             {listItems}
           </List>
         </div>
@@ -92,6 +97,7 @@ class Chat extends Component {
 const mapStateToProps = function (state, props) {
   return {
     messages: state.chosenGroupId && state.restaraunts[state.chosenGroupId].groups[0].messages,
+    users: state.chosenGroupId && state.restaraunts[state.chosenGroupId].groups[0].users,
     user: state.user,
     groupId: state.chosenGroupId,
   };
