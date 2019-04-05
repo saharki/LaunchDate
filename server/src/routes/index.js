@@ -5,6 +5,7 @@ const tenBis = require('../10bis');
 const groups = require('../../data/groups.json');
 const fs = require('fs-extra');
 const uuid = require('uuid');
+const googleTranslate = require('google-translate')('AIzaSyA6IGLLvINaRZfvCig0Z2DwzOqX8q9SN4Y');
 
 let restaraunts;
 tenBis
@@ -12,6 +13,7 @@ tenBis
   .then((tenBidRestaraunts) => {
     restaraunts = tenBidRestaraunts.map(_ => {
       return {
+        _id: uuid(),
         name: _.RestaurantName,
         logo: _.RestaurantLogoUrl,
         thumbnail: _.RestaurantLogoUrl,
@@ -24,7 +26,36 @@ tenBis
         },
         groups: groups.filter(_ => _.restarauntName === _.RestaurantName)
       }
-    })
+    });
+
+    return Promise.resolve(restaraunts);
+  })
+  .then((tenBidRestaraunts) => {
+    tenBidRestaraunts.forEach(_ => {
+      googleTranslate.translate(_.name, 'en', function (err, translation) {
+        if (err) {
+          return;
+        }
+
+        _.name = translation.translatedText;
+      });
+
+      googleTranslate.translate(_.address, 'en', function (err, translation) {
+        if (err) {
+          return;
+        }
+        
+        _.address = translation.translatedText;
+      });
+
+      googleTranslate.translate(_.tags.join(";"), 'en', function (err, translation) {
+        if (err) {
+          return;
+        }
+
+        _.tags = translation.translatedText.split(";");
+      });
+    });
   });
 
 const app = express();

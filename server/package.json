@@ -15,10 +15,11 @@
     "express": "^4.16.4",
     "fs-extra": "^7.0.1",
     "google-places-web": "^0.1.11",
-    "nodemon": "^1.18.10",
-    "uuid": "^3.3.2",
+    "google-translate": "^2.2.0",
     "node-geocoder": "^3.22.0",
+    "nodemon": "^1.18.10",
     "promise": "^8.0.3",
-    "request": "^2.88.0"
+    "request": "^2.88.0",
+    "uuid": "^3.3.2"
   }
 }
