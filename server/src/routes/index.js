@@ -34,7 +34,7 @@ app.get('/restaurants', async (req, res) => {
       },
       groups: [
         {
-          "_id": "0c6dd4db-186b-47dc-b908-b81fe6656938",
+          "_id": uuid(),
           "members": [
             {
               "displayName": "Freddie",
