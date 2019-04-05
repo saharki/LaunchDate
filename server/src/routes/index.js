@@ -71,11 +71,35 @@ const defaultUser = {
   role: 'Developer'
 }
 
+const BASE_THUMBNAIL_URL = `https://randomuser.me/api/portraits/men/****.jpg`;
+index = 1;
+
 app.get('/restaurants', async (req, res) => {
   let filtered = restaraunts.filter(_ => _.address !== 'Location');
   filtered.forEach(_ => {
     _.groups = groups.filter(__ => __.restarauntName === _.name);
+    if (_.groups.length <= 0) {
+      _.groups.push({
+        "_id": "631f571a-67d3-458c-8ae6-deaa29fce12a",
+        "members": [
+          {
+            "name": uuid(),
+            "thumbnail": BASE_THUMBNAIL_URL.replace("****", index)
+          },
+          {
+            "name": uuid(),
+            "thumbnail": BASE_THUMBNAIL_URL.replace("****", index)
+          },
+          {
+            "name": uuid(),
+            "thumbnail": BASE_THUMBNAIL_URL.replace("****", index)
+          }
+        ],
+        "restarauntName": _.name
+      })
+    }
   });
+
   res.send(filtered);
 });
 
@@ -93,9 +117,6 @@ app.get('/users', async (req, res) => {
   const users = JSON.parse(usersFile);
   res.send(users);
 });
-
-const BASE_THUMBNAIL_URL = `https://randomuser.me/api/portraits/men/****.jpg`;
-index = 10;
 
 app.post('/restaurants/:name/groups', async (req, res) => {
   const newGroupId = uuid.v4();
