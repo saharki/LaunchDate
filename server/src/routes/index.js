@@ -2,9 +2,30 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const tenBis = require('../10bis');
-const restaurants = require('../../data/restaurants.json');
+const groups = require('../../data/groups.json');
 const fs = require('fs-extra');
 const uuid = require('uuid');
+
+let restaraunts;
+tenBis
+  .getRestaurantsByAddress('Rotcshild 39, Tel Aviv')
+  .then((tenBidRestaraunts) => {
+    restaraunts = tenBidRestaraunts.map(_ => {
+      return {
+        name: _.RestaurantName,
+        logo: _.RestaurantLogoUrl,
+        thumbnail: _.RestaurantLogoUrl,
+        address: _.RestaurantAddress,
+        tags: _.RestaurantCuisineList.split(", "),
+        rating: _.ReviewsRank,
+        location: {
+          lon: _.ResGeoLocation_lon,
+          lat: _.ResGeoLocation_lat
+        },
+        groups: groups.filter(_ => _.restarauntName === _.RestaurantName)
+      }
+    })
+  });
 
 const app = express();
 app.use(cors());
@@ -19,42 +40,7 @@ const defaultUser = {
 }
 
 app.get('/restaurants', async (req, res) => {
-  let restaraunts1 = await tenBis.getRestaurantsByAddress('Rotcshild 39, Tel Aviv');
-  res.send(restaraunts1.map(_ => {
-    return {
-      name: _.RestaurantName,
-      logo: _.RestaurantLogoUrl,
-      thumbnail: _.RestaurantLogoUrl,
-      address: _.RestaurantAddress,
-      tags: _.RestaurantCuisineList.split(", "),
-      rating: _.ReviewsRank,
-      location: {
-        lon: _.ResGeoLocation_lon,
-        lat: _.ResGeoLocation_lat
-      },
-      groups: [
-        {
-          "_id": "0c6dd4db-186b-47dc-b908-b81fe6656938",
-          "members": [
-            {
-              "displayName": "Freddie",
-              "gender": "male",
-              "age": 35,
-              "role": "developer",
-              "company": "Soluto"
-            },
-            {
-              "displayName": "Sahar",
-              "gender": "male",
-              "age": 22,
-              "role": "Designer",
-              "company": "Soluto"
-            }
-          ]
-        }
-      ]
-    }
-  }));
+  res.send(restaraunts);
 });
 
 app.post('/users', async (req, res) => {
@@ -73,18 +59,16 @@ app.get('/users', async (req, res) => {
 });
 
 app.post('/restaurants/:name/groups', async (req, res) => {
-  const restaurant = restaurants.filter(restaurant => restaurant.name === req.params.name)[0];
   const newGroupId = uuid.v4();
-  restaurant.groups.push({ _id: newGroupId, members: req.body });
-  await fs.writeFile('./data/restaurants.json', JSON.stringify(restaurants));
+  groups.push({ _id: newGroupId, members: req.body, restarauntName: req.params.name });
+  await fs.writeFile('./data/groups.json', JSON.stringify(groups));
   res.send(newGroupId);
 });
 
 app.post('/restaurants/:name/groups/:_id/user', async (req, res) => {
-  const restaurant = restaurants.filter(restaurant => restaurant.name === req.params.name)[0];
-  const group = restaurant.groups.filter(group => group._id === req.params._id)[0];
+  const group = groups.filter(group => group._id === req.params._id && group.restarauntName === req.params.name)[0];
   group.members.push(req.body);
-  await fs.writeFile('./data/restaurants.json', JSON.stringify(restaurants));
+  await fs.writeFile('./data/groups.json', JSON.stringify(groups));
   res.send(200);
 });
 
