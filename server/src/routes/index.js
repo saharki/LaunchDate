@@ -19,7 +19,7 @@ tenBis
         thumbnail: _.RestaurantLogoUrl,
         address: _.RestaurantAddress,
         tags: _.RestaurantCuisineList.split(",").map(tag => tag.trim()),
-        rating: _.ReviewsRank,
+        rating: _.ReviewsRank / 2,
         location: {
           lon: _.ResGeoLocation_lon,
           lat: _.ResGeoLocation_lat
