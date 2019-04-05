@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Chats from './Chats';
 import MatchFinder from './MatchFinder';
-import { chooseGroup, addUserToGroup, createGroup } from './actions';
+import { chooseGroup, addUserToGroup, createGroup, setRestaraunts } from './actions';
 import { connect } from 'react-redux';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import axios from 'axios';
@@ -33,6 +33,7 @@ const App = (props) => {
     axios.get('https://f2fd39cd.ngrok.io/restaurants')
       .then((result) => {
         setCurrentRestaraunts(result.data);
+        setRestaraunts(result.data)
         setStatus('match');
       });
   }, []);
@@ -56,13 +57,13 @@ const App = (props) => {
               setCurrentRestaraunts(currentRestaraunts.slice(1, currentRestaraunts.length - 1));
               setChosenRestaraunt(restaraunt);
               if(restaraunt.groups.length <= 0 ){
-                await dispatch(createGroup(restaraunt._id, user))
+                await dispatch(createGroup(restaraunt.name, user))
               }
               else {
-                await dispatch(addUserToGroup(restaraunt._id, restaraunt.groups[0]._id, user))
+                await dispatch(addUserToGroup(restaraunt.name, restaraunt.groups[0]._id, user))
               }
               const result = await axios.get('https://f2fd39cd.ngrok.io/restaurants')
-              setCurrentRestaraunts(result.data);
+              this.props.dispatch(setRestaraunts(result.data))
               setStatus('chat');
             }}
             removeRestaraunt={(restaraunt) => {
